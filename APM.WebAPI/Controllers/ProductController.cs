@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.OData;
 
 namespace APM.WebAPI.Controllers
 {
@@ -13,11 +14,23 @@ namespace APM.WebAPI.Controllers
     {
         // GET: api/Product
         [EnableCorsAttribute("http://localhost:14405", "*","*")]
-        public IEnumerable<Product> Get()
+        [EnableQuery()]
+        public IQueryable<Product> Get()
         {
             var productReporistory = new ProductRepository();
 
-            return productReporistory.Retrieve();
+            return productReporistory.Retrieve().AsQueryable();
+        }
+
+        // GET: api/Product?search=
+        [EnableCorsAttribute("http://localhost:14405", "*", "*")]
+        public IEnumerable<Product> Get(string search)
+        {
+            var productReporistory = new ProductRepository();
+
+            var products = productReporistory.Retrieve();
+
+            return products.Where(e=> e.ProductCode.Contains(search));
         }
 
         // GET: api/Product/5
