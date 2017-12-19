@@ -3,16 +3,34 @@
     angular
         .module("productManagement")
         .controller("ProductListCtrl",
-                     ["productResource",
-                         ProductListCtrl]);
+        ["productResource",
+            ProductListCtrl]);
 
     function ProductListCtrl(productResource) {
         var vm = this;
 
-        vm.searchCriteria = "GDN";
+      
 
-        productResource.query({ search: vm.searchCriteria }, function (data) {
-            vm.products = data;
-        });
+        productResource.query({
+            $filter: "indexof(ProductCode, 'GDN') gt -1",
+            $top: 10
+        },
+            function (data) {
+                vm.products = data;
+            });
+
+        // Alternative code using variables instead of hard-coded values
+        //vm.searchCriteria = "GDN";
+        //vm.sortProperty = "Price";
+        //vm.sortDirection = "desc";
+
+        //productResource.query({
+        //    $filter: "contains(ProductCode, '" + vm.searchCriteria + "')" +
+        //        " or contains(ProductName, '" + vm.searchCriteria + "')",
+        //    $orderby: vm.sortProperty + " " + vm.sortDirection
+        //}, function (data) {
+        //    vm.products = data;
+        //})
+
     }
 }());

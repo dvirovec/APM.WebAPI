@@ -10,10 +10,11 @@ using System.Web.Http.OData;
 
 namespace APM.WebAPI.Controllers
 {
+    
     public class ProductController : ApiController
     {
         // GET: api/Product
-        [EnableCorsAttribute("http://localhost:14405", "*","*")]
+        
         [EnableQuery()]
         public IQueryable<Product> Get()
         {
@@ -22,8 +23,7 @@ namespace APM.WebAPI.Controllers
             return productReporistory.Retrieve().AsQueryable();
         }
 
-        // GET: api/Product?search=
-        [EnableCorsAttribute("http://localhost:14405", "*", "*")]
+        // GET: api/Product?search=        
         public IEnumerable<Product> Get(string search)
         {
             var productReporistory = new ProductRepository();

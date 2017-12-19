@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace APM.WebAPI
 {
@@ -14,8 +15,9 @@ namespace APM.WebAPI
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-
-            config.EnableCors();
+            
+            var cors = new EnableCorsAttribute("http://localhost:14405", "*", "*");
+            config.EnableCors(cors);
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
                 new CamelCasePropertyNamesContractResolver();
