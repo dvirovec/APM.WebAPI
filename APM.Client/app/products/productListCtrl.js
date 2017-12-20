@@ -13,7 +13,7 @@
 
         productResource.query({
             $filter: "indexof(ProductCode, 'GDN') gt -1",
-            $top: 10
+            $top: 3
         },
             function (data) {
                 vm.products = data;
