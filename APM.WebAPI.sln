@@ -25,7 +25,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "APM.Client", "APM.Client\",
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APM.WebAPI", "APM.WebAPI1\APM.WebAPI.csproj", "{6088B3FB-4A81-463A-BF20-7C154A992AB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APM.WebAPI", "APM.WebAPI\APM.WebAPI.csproj", "{6088B3FB-4A81-463A-BF20-7C154A992AB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -19,7 +19,7 @@ namespace APM.WebAPI
 
         public static string PublicClientId { get; private set; }
 
-        // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
+        // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context and user manager to use a single instance per request
@@ -39,6 +39,7 @@ namespace APM.WebAPI
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+                // In production mode set AllowInsecureHttp = false
                 AllowInsecureHttp = true
             };
 
