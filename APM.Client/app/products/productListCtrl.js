@@ -3,18 +3,15 @@
     angular
         .module("productManagement")
         .controller("ProductListCtrl",
-        ["productResource",
-            ProductListCtrl]);
+                     ["productResource",
+                         ProductListCtrl]);
 
     function ProductListCtrl(productResource) {
         var vm = this;
 
-      
-
         productResource.query({
-            $filter: "indexof(ProductCode, 'GDN') gt -1",
-            $top: 3
-        },
+            $filter: "contains(ProductCode, 'GDN') and Price ge 5 and Price le 20",
+            $orderby: "Price desc"},
             function (data) {
                 vm.products = data;
             });
