@@ -1,4 +1,4 @@
-namespace APM.WebAPI1.Areas.HelpPage
+namespace APM.WebAPI.Areas.HelpPage
 {
     /// <summary>
     /// Indicates whether the sample is used for request or response

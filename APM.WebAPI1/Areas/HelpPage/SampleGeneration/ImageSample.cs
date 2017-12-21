@@ -1,6 +1,6 @@
 using System;
 
-namespace APM.WebAPI1.Areas.HelpPage
+namespace APM.WebAPI.Areas.HelpPage
 {
     /// <summary>
     /// This represents an image sample on the help page. There's a display template named ImageSample associated with this class.

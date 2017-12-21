@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace APM.WebAPI1.Controllers
+namespace APM.WebAPI.Controllers
 {
     [Authorize]
     public class ValuesController : ApiController

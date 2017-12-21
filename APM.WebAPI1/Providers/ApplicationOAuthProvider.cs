@@ -9,9 +9,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using APM.WebAPI1.Models;
+using APM.WebAPI.Models;
 
-namespace APM.WebAPI1.Providers
+namespace APM.WebAPI.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
@@ -32,6 +32,9 @@ namespace APM.WebAPI1.Providers
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
             ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin",
+                new[] { "http://localhost:14405" });
 
             if (user == null)
             {

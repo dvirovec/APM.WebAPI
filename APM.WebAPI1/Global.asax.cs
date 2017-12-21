@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace APM.WebAPI1
+namespace APM.WebAPI
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace APM.WebAPI1.Models
+namespace APM.WebAPI.Models
 {
     // Models returned by AccountController actions.
 

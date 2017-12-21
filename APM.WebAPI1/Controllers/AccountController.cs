@@ -13,11 +13,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using APM.WebAPI1.Models;
-using APM.WebAPI1.Providers;
-using APM.WebAPI1.Results;
+using APM.WebAPI.Models;
+using APM.WebAPI.Providers;
+using APM.WebAPI.Results;
 
-namespace APM.WebAPI1.Controllers
+namespace APM.WebAPI.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
