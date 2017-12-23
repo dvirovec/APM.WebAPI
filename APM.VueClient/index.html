@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Acme Product Management</title>
+
+    <!-- Style sheets -->
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+
+   
+    <div id="grower">
+        
+        <h1 v-text="appName"> </h1>
+         
+         <input type="text" v-model="companyName" />
+         <label>Company name: {{companyName}}</label>
+         
+         <div class="form-control">
+
+             <div class="form-group">
+                 <input type="checkbox" id="1" value=1 v-model="checkedValues" />
+                 <label for="1">Godina</label>
+             </div>
+             <div class="form-group">
+                 <input type="checkbox" id="2" value=2 v-model="checkedValues" />
+                 <label for="2">Kvartal</label>
+             </div>
+             <div class="form-group">
+                 <input type="checkbox" id="3" value=3 v-model="checkedValues" />
+                 <label for="3">Polugodište</label>
+             </div>
+              <div class="form-group">
+                     <input type="checkbox" id="4" value=4 v-model="checkedValues" />
+                     <label for="4">Mjesec</label>
+             </div>
+           </div>
+
+             </div>
+
+    <script type="text/javascript" src="Scripts/vue.min.js"></script>
+    <script type="text/javascript" src="Scripts/axios.min.js"></script>
+
+    <script type="text/javascript">
+
+        var grower = new Vue({
+            el: "#grower",
+            data: {
+                appName: "Grower",
+                companyName: "",
+                checkedValues: []
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
