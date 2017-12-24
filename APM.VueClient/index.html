@@ -9,49 +9,28 @@
 </head>
 <body>
 
-   
-    <div id="grower">
-        
-        <h1 v-text="appName"> </h1>
-         
-         <input type="text" v-model="companyName" />
-         <label>Company name: {{companyName}}</label>
-         
-         <div class="form-control">
-
-             <div class="form-group">
-                 <input type="checkbox" id="1" value=1 v-model="checkedValues" />
-                 <label for="1">Godina</label>
-             </div>
-             <div class="form-group">
-                 <input type="checkbox" id="2" value=2 v-model="checkedValues" />
-                 <label for="2">Kvartal</label>
-             </div>
-             <div class="form-group">
-                 <input type="checkbox" id="3" value=3 v-model="checkedValues" />
-                 <label for="3">Polugodište</label>
-             </div>
-              <div class="form-group">
-                     <input type="checkbox" id="4" value=4 v-model="checkedValues" />
-                     <label for="4">Mjesec</label>
-             </div>
-           </div>
-
-             </div>
-
     <script type="text/javascript" src="Scripts/vue.min.js"></script>
     <script type="text/javascript" src="Scripts/axios.min.js"></script>
+    <script src="travel/dataRepository.js"></script>
+    
+    <div id="travel">
+        <form class="form-inline">
+            <div class="form-group"><town-select label="Iz" v-model="order.from" /></div>
+            <div class="form-group"><town-select label="u" v-model="order.to" /></div>
+            <div class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></div>
+        </form>
+    </div>
 
     <script type="text/javascript">
 
-        var grower = new Vue({
-            el: "#grower",
+        var travel = new Vue({
+            el: "#travel",
             data: {
-                appName: "Grower",
-                companyName: "",
-                checkedValues: []
-            }
+                order: { from:2, to:3 }
+            },
+          
         });
+        
 
     </script>
 
