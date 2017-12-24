@@ -29,11 +29,11 @@ Vue.component('town-select', {
         }
     },
     
-    template: '<div class="form-inline col-sx-6">' +
+    template: '<div class="form-inline col-sx-6>' +
     '<label style="margin-right:.5em;margin-left:.5em;" for="town-select">{{ label }}</label>' +
-    '<select v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
+    '<div class="select-editable"><select v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
     '<option v-for="town in town_list" v-bind:value="town.id">{{town.name}}</option>'+
-    '</select></div>',
+    '</select></div></div>',
     data: {
         town_list: null,
         value: null
