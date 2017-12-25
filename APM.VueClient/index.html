@@ -12,11 +12,15 @@
 </head>
 <body>
     
-    <!--<script src="Scripts/jquery-3.2.1.js"></script>
-    <script src="Scripts/semantic/semantic.js"></script>-->
+    <script src="Scripts/jquery-3.2.1.js"></script>
+    <!--<script src="Scripts/semantic/semantic.js"></script>-->
 
     <script type="text/javascript" src="Scripts/vue.min.js"></script>
     <script type="text/javascript" src="Scripts/axios.min.js"></script>
+
+    <script src="Scripts/component/datatables.js"></script>
+
+
     <script src="Scripts/component/bs_combo_box.js"></script>
     <script src="travel/dataRepository.js"></script>
 
@@ -26,20 +30,37 @@
             <div class="form-group"><town-select label="iz" v-model="order.town_from" /></div>
             <div class="form-group"><town-select label="u" v-model="order.town_to" /></div>
 
-            <div class="form mt-5">
+            <div class="form" style="margin-top:2em;">
                 <div class="form-group"><town-select v-model="rel_town_from" /></div>
                 <div class="form-group"><town-select label="-" v-model="rel_town_to" /></div>
-                <div class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></div>
+                <div class="form-group"><input type="number" class="form-control text-right"  style="width:7em;" v-model:number="rel_km" /></div>
+                <div class="btn btn-primary" @click="addRoute"><span class="glyphicon glyphicon-plus"></span></div>
             </div>
 
-            <div id="route_table">
-                
-            </div>
-
+            <table id="route_table" class="display" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Polazište</th>
+                        <th>Odredište</th>
+                        <th>Kilometara</th>                        
+                    </tr>
+                </thead>               
+                <tbody>
+                    <tr v-for="r in this.order.relations">                       
+                        <td>{{r.town_from.name}}</td>
+                      <td>{{r.town_to.name}}</td>
+                      <td>{{r.km}}</td>                       
+                    </tr>                                        
+                </tbody>
+            </table>
         </form>
     </div>
 
     <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#route_table').DataTable();
+        });
 
         var travel = new Vue({
             el: "#travel",
@@ -47,16 +68,44 @@
                 order: null,
                 rel_town_from: null,
                 rel_town_to: null,
+                rel_km:0.0,
             },            
             beforeMount: function () {
-                this.order = order;
+                this.order = init_order;
+            },
+            methods: {         
+                
+                addRoute() {
+
+                    let data = {
+                        "town_from": null,
+                        "town_to": null,
+                        "km": this.rel_km};
+
+                    console.log(this.getTownById(this.rel_town_from));
+
+                    data.town_from = this.getTownById(this.rel_town_from);
+                    data.town_to = this.getTownById(this.rel_town_to);
+
+                   
+
+                    this.order.relations.push(data);
+                },
+                getTownById: function (town_id) {
+
+                    let town = null;
+
+                    $(towns).each(function (index, data) {
+                        if (data.id == town_id) {                           
+                            town =  data;
+                        }
+                    });
+                    return town;
+                }
             }
-        });
 
-        $(document).ready(function () {
-            $('#route_table').DataTable();
         });
-
+     
     </script>
 
 </body>

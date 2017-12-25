@@ -33,4 +33,4 @@
     beforeMount: function () {
         this.town_list = towns;
     }
-})
+});
