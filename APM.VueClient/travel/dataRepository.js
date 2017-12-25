@@ -13,3 +13,4 @@ var company = {
 };
 
 
+var order = { town_from: 1, town_to: 2, relations: [] }; 
