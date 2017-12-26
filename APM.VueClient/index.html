@@ -37,29 +37,39 @@
                 <div class="btn btn-primary" @click="addRoute"><span class="glyphicon glyphicon-plus"></span></div>
             </div>
 
-            <table id="route_table" class="display" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>Polazište</th>
-                        <th>Odredište</th>
-                        <th>Kilometara</th>                        
-                    </tr>
-                </thead>               
-                <tbody>
-                    <tr v-for="r in this.order.relations">                       
-                        <td>{{r.town_from.name}}</td>
-                      <td>{{r.town_to.name}}</td>
-                      <td>{{r.km}}</td>                       
-                    </tr>                                        
-                </tbody>
-            </table>
+            <div v-if="order.relations.length >0">
+                <table id="route_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Polazište</th>
+                            <th>Odredište</th>
+                            <th width="20%">Kilometara</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <tr v-for="r in this.order.relations">
+                           <td>{{r.town_from.name}}</td>
+                           <td>{{r.town_to.name}}</td>
+                           <td class="text-right">{{r.km}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Ukupno</th>
+                            <th></th>
+                            <th class="text-right">{{this.total_km}}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </form>
     </div>
 
     <script type="text/javascript">
 
+
         $(document).ready(function () {
-            $('#route_table').DataTable();
+            
         });
 
         var travel = new Vue({
@@ -68,28 +78,40 @@
                 order: null,
                 rel_town_from: null,
                 rel_town_to: null,
-                rel_km:0.0,
-            },            
+                rel_km: 0.0,
+                total_km: 0.0
+            },   
             beforeMount: function () {
                 this.order = init_order;
             },
+            mounted: function () {
+                $('#route_table').DataTable();
+                this.sumKm()
+            },
             methods: {         
-                
+
+                sumKm: function() {
+
+                    this.total_km = 0; 
+
+                    for (i in this.order.relations) {
+                        this.total_km += this.order.relations[i].km;
+                    }
+                },
                 addRoute() {
 
                     let data = {
                         "town_from": null,
                         "town_to": null,
-                        "km": this.rel_km};
-
-                    console.log(this.getTownById(this.rel_town_from));
+                        "km": Number(this.rel_km)};
 
                     data.town_from = this.getTownById(this.rel_town_from);
                     data.town_to = this.getTownById(this.rel_town_to);
 
-                   
-
                     this.order.relations.push(data);
+
+                    this.sumKm();
+
                 },
                 getTownById: function (town_id) {
 
@@ -105,7 +127,10 @@
             }
 
         });
-     
+
+      
+ 
+
     </script>
 
 </body>
