@@ -22,56 +22,26 @@
 
 
     <script src="Scripts/component/bs_combo_box.js"></script>
+    <script src="Scripts/component/bs_combo_cost_type.js"></script>
     <script src="travel/dataRepository.js"></script>
-
-    <div class="container">
-        <h2>Dynamic Tabs</h2>
-        <p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
-
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-            <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-            <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-            <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
-                <h3>HOME</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div id="menu1" class="tab-pane fade">
-                <h3>Menu 1</h3>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
-            <div id="menu2" class="tab-pane fade">
-                <h3>Menu 2</h3>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-            </div>
-            <div id="menu3" class="tab-pane fade">
-                <h3>Menu 3</h3>
-                <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-            </div>
-        </div>
-    </div>
 
 
     <div id="travel">
         <div class="container">
             <form class="form-inline">
                 <h1>Službeno putovanje</h1>
-                <div class="form-group"><input class="form-control" type="datetime-local" v-model:date="order.travel_date" /></div>
-                <div class="form-group"><town-select label="u" v-model="order.town_to" /></div>
-
+                <div style="padding-bottom:5px;">
+                    <div class="form-group"><input class="form-control" type="datetime-local" v-model:date="order.travel_date" /></div>
+                    <div class="form-group"><town-select label="u" v-model="order.town_to" /></div>
+                </div>
                 <ul class="nav nav-tabs">
-                    <li><a data-toggle="tab" href="#">Home</a></li>
-                    <li class="active"><a data-toggle="tab" href="#">Relacije</a></li>
-                    <li><a data-toggle="tab" href="#">Troškovi</a></li>
+                    <li class="active"><a data-toggle="tab" href="#relation_tab">Relacije</a></li>
+                    <li><a data-toggle="tab" href="#cost_tab">Troškovi</a></li>
                     <li><a data-toggle="tab" href="#">Obračun</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane fade in active">
+                    <div class="tab-pane active" id="relation_tab">
 
                         <div class="form" style="margin-top:1em;">
                             <div class="form-group"><town-select v-model="rel_town_from" /></div>
@@ -108,9 +78,10 @@
                         </table>
                     </div>
 
-                    <div class="tab-pane fade">
+                    <div class="tab-pane" id="cost_tab">
 
                         <div class="form" style="margin-top:1em;">
+                            <div class="form-group"><cost-type-select v-model="selected_cost_type_id" /></div>
                             <div class="form-group"><input class="form-control" type="text" v-model="cost_description" /></div>
                             <div class="form-group"><input class="form-control text-right" type="number" v-model="cost_qty" /></div>
                             <div class="form-group"><input class="form-control text-right" type="number" v-model="cost_unit_price" /></div>
@@ -120,10 +91,10 @@
                         <table id="cost_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th>Opis</th>
-                                    <th>Količina</th>
-                                    <th width="20%">Cijena</th>
-                                    <th width="20%">Iznos</th>
+                                    <th width="60%">Opis</th>
+                                    <th width="15%">Količina</th>
+                                    <th width="15%">Cijena</th>
+                                    <th width="15%">Iznos</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -152,6 +123,30 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            var route_table = $('#route_table').DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "sorting": false,
+                "searching": false,
+            });
+
+            $('#route_table tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('bg-primary')) {
+                    $(this).removeClass('bg-primary');
+                }
+                else {
+                    route_table.$('tr.bg-primary').removeClass('bg-primary');
+                    $(this).addClass('bg-primary');
+                }
+            });
+
+       /*     $('#route_table').click(function () {
+                route_table.row('.selected').remove().draw(false);
+            });*/
+
+
         });
 
         var travel = new Vue({
@@ -165,27 +160,23 @@
                 total_km: 0.0,
 
                 cost_description: "",
+                selected_cost_type_id:0,
                 cost_unit_price: 0.0,
-                cost_qty: 0.0,
+                cost_qty: 1.0,
             },
             beforeMount: function () {
                 this.order = init_order;
             },
             mounted: function () {
-                $('#route_table').DataTable({
-                    "paging": false,
-                    "ordering": false,
-                    "info": false,
-                    "sorting": false,
-                    "searching": false
-                });
+              
 
                 $('#cost_table').DataTable({
                     "paging": false,
                     "ordering": false,
                     "info": false,
                     "sorting": false,
-                    "searching": false
+                    "searching": false,
+                    "selecting": true
                 });
 
                 this.sumKm();
@@ -200,7 +191,7 @@
                     this.total_costs = 0.0;
 
                     for (i in this.order.costs) {
-                        this.total_costs += this.order.costs[i].amount;
+                        this.order.total_costs += this.order.costs[i].amount;
                     }
                 },
                 sumKm: function () {
@@ -218,6 +209,14 @@
                 },
                 addCost() {
                     let data = { "description": "", "qty": 1, "unit_price": 0.0, "amount": 0.0 };
+
+                    data.unit_price = this.cost_unit_price;
+                    data.qty = this.cost_qty;
+                    data.description = this.cost_description;
+                    data.amount = Number(data.unit_price) * Number(data.qty);
+
+                    this.order.costs.push(data);
+
                     this.sumCosts()
                 },
                 addRoute() {
