@@ -19,21 +19,18 @@ var cost_type_list = [
     { "id": 3, "description": 'Cestarina', "unit_price": 48, "currency": { "id": 'HRK', ex_rate: 1 }  }
 ];
 
-
 var unit_km_amount = 2.0;
 
 var currentDate = moment().format("YYYY-MM-DD");
 
 moment.locale("hr"); 
 
-console.log(moment.locale());
-
 var init_order = {
     "travel_date": moment().format("YYYY-MM-DD"),
     "town_to": 0,
     "travel_start": moment().format("YYYY-MM-DDThh:mm"),
     "travel_finish": moment().format("YYYY-MM-DDThh:mm"),
-    "travel_duration":0,
+    "travel_duration": moment().format("YYYY-MM-DDThh:mm"),
     "relations": [{"id":1,
             "town_from": { "id": 1, "name": "Zagreb", "country": { "id": 1, "name": "Hrvatska" } },
             "town_to": { "id": 2, "name": "Deutschlandsberg", "country": { "id": 2, "name": "Austria" } },

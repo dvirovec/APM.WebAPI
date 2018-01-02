@@ -33,26 +33,22 @@
             <div class='ui vertical pointing menu' style='visibility:hidden;width:180px;position:fixed;z-index:100;top:0px;left:00px;background-color:#fcfcfc' id='data_menu'><a class='item' on-click='@this.openEdit()'>Uređivanje</a><a class='item' on-click='@this.deleteSelected()'>Brisanje</a></div>"
 
             <form class="form-inline">
+
                 <h1>Službeno putovanje</h1>
 
                 <div class="container">
-
                     <div class="row">
-
                         <div style="padding-bottom:5px;">
-
                             <div class="form-group">
                                 <input class='form-control' type="date" v-model="order.travel_date" required />
                             </div>
-
                             <div class="form-group">
                                 <town-select label="u" v-model="order.town_to" required />
                             </div>
                         </div>
-
                     </div>
 
-                    <div class="row"  style="padding-bottom:5px;">
+                    <div class="row" style="padding-bottom:5px;">
                         <div class="form-group">
                             <label style="margin-right:.5em">Početak</label>
                             <input class='form-control' type="datetime-local" v-model="order.travel_start" required />
@@ -61,27 +57,29 @@
                             <label style="margin-right:.5em;margin-left:.5em">Završetak</label>
                             <input class='form-control' type="datetime-local" v-model="order.travel_finish" required />
                         </div>
+                        <div class="form-group">
+                            <label style="margin-right:.5em;margin-left:.5em">Trajanje</label>
+                            <input class='form-control' type="number" v-model="order.travel_duration"/>
+                        </div>
                     </div>
 
                     </div>
-
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#relation_tab">Relacije</a></li>
-                        <li><a data-toggle="tab" href="#cost_tab">Troškovi</a></li>
-                        <li><a data-toggle="tab" href="#">Obračun</a></li>
-                    </ul>
-
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#relation_tab">Relacije</a></li>
+                            <li><a data-toggle="tab" href="#cost_tab">Troškovi</a></li>
+                            <li><a data-toggle="tab" href="#">Obračun</a></li>
+                        </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="relation_tab">
 
                             <div class="form" style="margin-top:1em;margin-left:-1em;">
+                                
                                 <div class="form-group"><town-select v-model="route_tmp.town_from.id" /></div>
                                 <div class="form-group"><input type="number" class="form-control text-ceneter" style="width:7em;" v-model:number="route_tmp.km_at_start" /></div>
                                 <div class="form-group"><town-select label="-" v-model="route_tmp.town_to.id" /></div>
                                 <div class="form-group"><input type="number" class="form-control text-ceneter" style="width:7em;" v-model:number="route_tmp.km_at_finish" /></div>
                                 <div class="form-group"><input type="number" class="form-control text-right" style="width:7em;" v-model:number="route_tmp.km" /></div>
                                 <div class="btn btn-primary" @click="addRoute"><span class="glyphicon glyphicon-plus"></span></div>
-
                                 <div v-if="selected_route.length > 0" class="btn btn-primary" @click="addRoute"><span class="glyphicon glyphicon-trash"></span></div>
 
                             </div>
@@ -205,11 +203,9 @@
                     maxItem = item;
                 }
             }
-
             return max;
         }
         
-
         $(document).ready(function () {
            
 
@@ -247,17 +243,42 @@
 
 
             },
+            computed: {
+                "order.travel_duration":  {
+                    get: function () {
+                        conosle.log(moment.utc(moment(this.order.travel_finish).diff(this.order.travel_start)));
+                        return moment.utc(moment(this.order.travel_finish).diff(this.order.travel_start));
+                    }
+                } 
+            },
+            watch: {
+                "order.travel_start": function (val) {
+                    this.order.travel_duration = this.calcDuration();                    
+                },
+                "order.travel_finish": function (val) {                    
+                    this.order.travel_duration = this.calcDuration();                    
+                                 
+                }
+            },
             mounted: function () {
                 
                 this.sumKm();
                 this.sumCosts()
-            },
-            
+            },                
             methods: {
+                calcDuration: function () {
+
+                    if (moment(this.order.travel_start).isValid() &&
+                        moment(this.order.travel_finish).isValid()) {
+
+                        return this.order.travel_duration =
+                            Math.round(((moment(this.order.travel_finish).diff(this.order.travel_start)) / 3600000)*100)/100;    
+                        
+                    }
+                },               
                 editRouteRow: function (id) {
 
                     route = getItemByValue(this.order.relations, "id", id);                                    
-
                     this.route_tmp = route;
                     
                 },
