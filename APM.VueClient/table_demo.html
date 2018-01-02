@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Table demo</title>
+    <link href="//unpkg.com/bootstrap@3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//unpkg.com/vue2-datatable-component/dist/min.css" rel="stylesheet">
+    
+</head>
+<body>
+
+    <script src="//unpkg.com/vue@2.4.4/dist/vue.min.js"></script>
+    <script src="//unpkg.com/jquery@2.1.4/dist/jquery.min.js"></script>
+    <script src="//unpkg.com/bootstrap@3.3.5/dist/js/bootstrap.min.js"></script>
+    <script src="//unpkg.com/vue2-datatable-component/dist/min.js"></script>
+    <script src="travel/dataRepository.js"></script>
+    <div id="app">
+
+
+    </div>
+    <script>
+  new Vue({
+    el: '#app',
+    template: [
+      '<div class="container">',
+        '<code>query: {{ query }}</code>',
+        '<datatable v-bind="$data" />',
+      '</div>>'
+        ].join(''),
+        beforeMount: function () {
+            this.data = towns;
+        },
+    data: function () {
+      return {
+        columns: [
+          { title: 'Id', field: 'id', sortable: true },
+          { title: 'Name', field: 'name' },
+          { title: 'Country', field: 'country.name', sortable: true },          
+        ],
+        data: [], // no data
+        total: 0,
+        query: {},
+        selection:[]
+      }
+    }
+  })
+    </script>
+
+</body>
+</html>

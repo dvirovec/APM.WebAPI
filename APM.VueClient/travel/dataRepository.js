@@ -1,4 +1,5 @@
-﻿var currecy_list = [{ "id": 'HRK', ex_rate: 1 }, { "id": 'EUR', ex_rate: 7.54334 }];
+﻿
+var currecy_list = [{ "id": 'HRK', ex_rate: 1 }, { "id": 'EUR', ex_rate: 7.54334 }];
 
 var countries = [{ "id": 1, "name": "Hrvatska", "day_amount": 140, "currency":"HRK" },
     { "id": 2, "name": "Austria", "day_amount": 70, "currency": "EUR" }];
@@ -21,20 +22,32 @@ var cost_type_list = [
 
 var unit_km_amount = 2.0;
 
+var currentDate = moment().format("YYYY-MM-DD");
+
+moment.locale("hr"); 
+
+console.log(moment.locale());
+
 var init_order = {
-    "travel_date": '2017-10-01T22:00:00',
+    "travel_date": moment().format("YYYY-MM-DD"),
     "town_to": 0,
-    "travel_start": Date.now(),
-    "travel_end": Date.now(),
-    "relations": [{
-        "town_from": { "id": 1, "name": "Zagreb", "country": { "id": 1, "name": "Hrvatska" } },
-        "town_to": { "id": 2, "name": "Deutschlandsberg", "country": { "id": 2, "name": "Austria" } },
-        "km": 233,
-        "amount":0.0
-    },
-    {
-        "town_from": { "id": 1, "name": "Zagreb", "country": { "id": 1, "name": "Hrvatska" } },
-        "town_to": { "id": 3, "name": "Đurđevac", "country": { "id": 1, "name": "Hrvatska" } },
+    "travel_start": moment().format("YYYY-MM-DDThh:mm"),
+    "travel_finish": moment().format("YYYY-MM-DDThh:mm"),
+    "travel_duration":0,
+    "relations": [{"id":1,
+            "town_from": { "id": 1, "name": "Zagreb", "country": { "id": 1, "name": "Hrvatska" } },
+            "town_to": { "id": 2, "name": "Deutschlandsberg", "country": { "id": 2, "name": "Austria" } },
+            "km_at_start": 0,
+            "km_at_finish": 0,
+            "km": 233,
+            "amount":0.0
+        },
+        {
+        "id": 2,
+        "town_from": { "id": 2, "name": "Deutschlandsberg", "country": { "id": 2, "name": "Austria" } },
+        "town_to": { "id": 1, "name": "Zagreb", "country": { "id": 1, "name": "Hrvatska" } },
+        "km_at_start": 0,
+        "km_at_finish": 0,
         "km": 120,
         "amount": 0.0
         }],

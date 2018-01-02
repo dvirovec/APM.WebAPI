@@ -27,10 +27,31 @@
     methods: {
         updateValue(value) {
             this.$emit('input', value);
-            this.value = value;
+            this.value = getItemByValue(towns, "id", value);
         }
     },
     beforeMount: function () {
         this.town_list = towns;
+    }
+});
+
+Vue.component('datetimepicker', {
+    template: "<input  type='datetime-local' class='form-control' :value='value' @change='update($event)' /> \
+                <span class='input-group-addon'> \
+                    <span class='glyphicon glyphicon-calendar'></span> \
+                </span>",
+    props: ['value'],
+    methods: {
+        update(event) {
+
+            this.$emit('input', event.target.value);
+
+            console.log(event.target.value);
+
+        }
+    },
+    mounted() {
+        
+      
     }
 });
