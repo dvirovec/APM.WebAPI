@@ -32,7 +32,7 @@
 
             <div class='ui vertical pointing menu' style='visibility:hidden;width:180px;position:fixed;z-index:100;top:0px;left:00px;background-color:#fcfcfc' id='data_menu'>            
                 <a class='item' on-click='@this.openEdit()'>Uređivanje</a>
-                <a class='item' on-click='@this.deleteSelected()'>Brisanje</a>
+                <a class='item' on-click='removeSelectedRoute'>Brisanje</a>
            </div>
 
             <form class="form-inline">
@@ -87,7 +87,7 @@
                                 <div class="form-group"><input type="number" class="form-control text-ceneter" style="width:7em;" v-model:number="route_tmp.km_at_finish" /></div>
                                 <div class="form-group"><input type="number" class="form-control text-right" style="width:7em;" v-model:number="route_tmp.km" /></div>
                                 <div class="btn btn-primary" @click="addRoute"><span class="glyphicon glyphicon-plus"></span></div>
-                                <div v-if="selected_route.length > 0" class="btn btn-primary" @click="addRoute"><span class="glyphicon glyphicon-trash"></span></div>
+                                <div v-if="selected_route.length > 0" class="btn btn-primary" @click="removeSelectedRoute"><span class="glyphicon glyphicon-trash"></span></div>
 
                             </div>
 
@@ -173,6 +173,14 @@
 
     <script type="text/javascript">
 
+        function clone(obj) {
+            var outpurArr = new Array();
+            for (var i in obj) {
+                outpurArr[i] = typeof (obj[i]) == 'object' ? this.clone(obj[i]) : obj[i];
+            }
+            return outpurArr;
+        }
+
         function getItemByValue(array, propName, value) {            
 
             var theItem = null;
@@ -200,6 +208,18 @@
             return maxItem;
         }
 
+        function getItemIndex(array, propName, value) {
+            let r = null;
+            for (var i = 0; i < array.length; i++) {
+                var item = array[i];
+                if (item[propName] == value) {
+                    r = i;
+                    break;
+                }
+            }
+            return r;
+        }
+        
         function getMax(array, propName) {
             var max = 0;
             var maxItem = null;
@@ -237,6 +257,8 @@
             beforeMount: function () {
                 
                 this.order = init_order;
+
+
 
                 this.route_tmp = {
                     "id": -1,
@@ -276,6 +298,14 @@
                 this.sumCosts()
             },                
             methods: {
+                removeSelectedRoute: function () {                                                            
+                    for (r in this.selected_route) {    
+                        let i = getItemIndex(this.order.relations, "id", this.selected_route[r]);
+                        if(i != null)
+                            this.order.relations.splice(i,1);
+                    }
+                    this.selectRouteNone();
+                },
                 calcDuration: function () {
 
                     if (moment(this.order.travel_start).isValid() &&
@@ -290,6 +320,22 @@
 
                     route = getItemByValue(this.order.relations, "id", id);                                    
                     this.route_tmp = route;
+                    
+                },
+                selectRouteNone: function () {
+
+                    this.selected_route = [];
+
+                    var selected_route = this.selected_route;
+
+                    $(".travel_row").each(function () {
+                        this.checked = false;                        
+                    });
+
+                    $("#select_all").each(function () {
+                        this.checked = false;
+                    });
+
                     
                 },
                 selectRouteAll: function (event) {
@@ -355,9 +401,11 @@
                 },
                 addRoute() {
 
-                    this.route_tmp.id = getMax(this.order.relations, "id") + 1;
+                    let new_row = clone(this.route_tmp);
+
+                    this.new_row.id = getMax(this.order.relations, "id") + 1;
                     
-                    this.order.relations.push(this.route_tmp);
+                    this.order.relations.push(this.new_row);
 
                     this.sumKm();
 

@@ -36,17 +36,15 @@ var init_order = {
     "relations": [{"id":1,
             "town_from": { "id": 1, "name": "Zagreb", "country": { "id": 1, "name": "Hrvatska" } },
             "town_to": { "id": 2, "name": "Deutschlandsberg", "country": { "id": 2, "name": "Austria" } },
-            "km_at_start": 0,
-            "km_at_finish": 0,
+            "km_at_start": 265000,
+            "km_at_finish": null,
             "km": 233,
-            "amount":0.0
-        },
-        {
-        "id": 2,
+            "amount":0.0},
+        {"id": 2,
         "town_from": { "id": 2, "name": "Deutschlandsberg", "country": { "id": 2, "name": "Austria" } },
         "town_to": { "id": 1, "name": "Zagreb", "country": { "id": 1, "name": "Hrvatska" } },
-        "km_at_start": 0,
-        "km_at_finish": 0,
+        "km_at_start": null,
+        "km_at_finish": 265247,
         "km": 120,
         "amount": 0.0
         }],
