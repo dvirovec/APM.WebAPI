@@ -30,7 +30,10 @@
 
         <div class="container">
 
-            <div class='ui vertical pointing menu' style='visibility:hidden;width:180px;position:fixed;z-index:100;top:0px;left:00px;background-color:#fcfcfc' id='data_menu'><a class='item' on-click='@this.openEdit()'>Uređivanje</a><a class='item' on-click='@this.deleteSelected()'>Brisanje</a></div>"
+            <div class='ui vertical pointing menu' style='visibility:hidden;width:180px;position:fixed;z-index:100;top:0px;left:00px;background-color:#fcfcfc' id='data_menu'>            
+                <a class='item' on-click='@this.openEdit()'>Uređivanje</a>
+                <a class='item' on-click='@this.deleteSelected()'>Brisanje</a>
+           </div>
 
             <form class="form-inline">
 
@@ -40,10 +43,14 @@
                     <div class="row">
                         <div style="padding-bottom:5px;">
                             <div class="form-group">
+                                <label style="margin-right:.5em;">Dana</label>
                                 <input class='form-control' type="date" v-model="order.travel_date" required />
                             </div>
                             <div class="form-group">
                                 <town-select label="u" v-model="order.town_to" required />
+                            </div>
+                            <div class="form-group">
+                                <vehicle-select label="vozilo" v-model="order.vehicle" required />
                             </div>
                         </div>
                     </div>
@@ -57,11 +64,11 @@
                             <label style="margin-right:.5em;margin-left:.5em">Završetak</label>
                             <input class='form-control' type="datetime-local" v-model="order.travel_finish" required />
                         </div>
-                        <div class="form-group">
-                            <label style="margin-right:.5em;margin-left:.5em">Trajanje</label>
-                            <input class='form-control' type="number" v-model="order.travel_duration"/>
+                        <div class="form-group">                                                        
+                                <label for="duration" style="margin-right:.5em;margin-left:.5em">Trajanje</label>                                
+                                <input style="width:6em" name="duration" class='form-control text-center' type="number" v-model="order.travel_duration" />                                
+                            </div>
                         </div>
-                    </div>
 
                     </div>
                         <ul class="nav nav-tabs">
@@ -252,10 +259,13 @@
                 } 
             },
             watch: {
-                "order.travel_start": function (val) {
+                "order.travel_date": function () {
+                    this.order.travel_start = moment(this.order.travel_date).format(DATE_TIME_FORMAT).replace("12:","00:");
+                },
+                "order.travel_start": function () {
                     this.order.travel_duration = this.calcDuration();                    
                 },
-                "order.travel_finish": function (val) {                    
+                "order.travel_finish": function () {                    
                     this.order.travel_duration = this.calcDuration();                    
                                  
                 }

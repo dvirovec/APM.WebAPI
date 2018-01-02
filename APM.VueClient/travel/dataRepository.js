@@ -1,5 +1,8 @@
-﻿
-var currecy_list = [{ "id": 'HRK', ex_rate: 1 }, { "id": 'EUR', ex_rate: 7.54334 }];
+﻿var currecy_list = [{ "id": 'HRK', ex_rate: 1 }, { "id": 'EUR', ex_rate: 7.54334 }];
+
+var vehicles = [{ 'id': 1, 'name': "Passat ZG-8184-DS", "private": true },
+                { 'id': 2, 'name': "Audi ZG-2184-ED", "private": false }];
+
 
 var countries = [{ "id": 1, "name": "Hrvatska", "day_amount": 140, "currency":"HRK" },
     { "id": 2, "name": "Austria", "day_amount": 70, "currency": "EUR" }];
@@ -21,16 +24,15 @@ var cost_type_list = [
 
 var unit_km_amount = 2.0;
 
-var currentDate = moment().format("YYYY-MM-DD");
-
 moment.locale("hr"); 
 
 var init_order = {
-    "travel_date": moment().format("YYYY-MM-DD"),
+    "travel_date": getDate(),
     "town_to": 0,
-    "travel_start": moment().format("YYYY-MM-DDThh:mm"),
-    "travel_finish": moment().format("YYYY-MM-DDThh:mm"),
-    "travel_duration": moment().format("YYYY-MM-DDThh:mm"),
+    "vehicle":0,
+    "travel_start": getDateTime(),
+    "travel_finish": getDateTime(),
+    "travel_duration": 0,
     "relations": [{"id":1,
             "town_from": { "id": 1, "name": "Zagreb", "country": { "id": 1, "name": "Hrvatska" } },
             "town_to": { "id": 2, "name": "Deutschlandsberg", "country": { "id": 2, "name": "Austria" } },

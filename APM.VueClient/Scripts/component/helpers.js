@@ -1,4 +1,30 @@
-﻿function getCurrentDate() {
+﻿const DATE_FORMAT = "YYYY-MM-DD";
+const DATE_TIME_FORMAT = "YYYY-MM-DDThh:ss";
+
+function getDateTime() {
+    var m = moment().utcOffset(0);
+    m.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+
+    mStr = m.format(DATE_TIME_FORMAT).replace('12:', '00:');
+
+    console.log(mStr);
+
+    return mStr;
+}
+
+function getDate() {
+    var m = moment().utcOffset(0);
+    m.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+
+    mStr = m.format(DATE_FORMAT);
+
+    console.log(mStr);
+
+    return mStr;
+}
+
+
+function getCurrentDate() {
 
     var now = new Date($.now())
         , year
