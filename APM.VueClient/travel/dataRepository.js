@@ -1,4 +1,6 @@
-﻿var currecy_list = [{ "id": 'HRK', ex_rate: 1 }, { "id": 'EUR', ex_rate: 7.54334 }];
+﻿const server_path = 'http://localhost:14340';
+
+var currecy_list = [{ "id": 'HRK', ex_rate: 1 }, { "id": 'EUR', ex_rate: 7.54334 }];
 
 var vehicles = [{ 'id': 1, 'name': "Passat ZG-8184-DS", "private": true },
                 { 'id': 2, 'name': "Audi ZG-2184-ED", "private": false }];
@@ -54,3 +56,13 @@ var init_order = {
     "total_costs":0.0
 }; 
 
+function getProductList() {
+    axios.get(server_path +'/api/product')
+        .then(function (response) {
+            resultElement.innerHTML = generateSuccessHTMLOutput(response);
+        })
+        .catch(function (error) {
+            resultElement.innerHTML = generateErrorHTMLOutput(error);
+        });   
+
+}

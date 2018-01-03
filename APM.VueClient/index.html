@@ -30,11 +30,9 @@
 
         <div class="container">
 
-            <div class='ui vertical pointing menu' style='visibility:hidden;width:180px;position:fixed;z-index:100;top:0px;left:00px;background-color:#fcfcfc' id='data_menu'>            
-                <a class='item' on-click='@this.openEdit()'>Uređivanje</a>
-                <a class='item' on-click='removeSelectedRoute'>Brisanje</a>
-           </div>
+            <div class="btn btn-danger" onclick="getProductList();">Products</div>
 
+            
             <form class="form-inline">
 
                 <h1>Službeno putovanje</h1>
@@ -173,14 +171,6 @@
 
     <script type="text/javascript">
 
-        function clone(obj) {
-            var outpurArr = new Array();
-            for (var i in obj) {
-                outpurArr[i] = typeof (obj[i]) == 'object' ? this.clone(obj[i]) : obj[i];
-            }
-            return outpurArr;
-        }
-
         function getItemByValue(array, propName, value) {            
 
             var theItem = null;
@@ -258,8 +248,6 @@
                 
                 this.order = init_order;
 
-
-
                 this.route_tmp = {
                     "id": -1,
                     "town_from": towns[0],
@@ -269,8 +257,7 @@
                     "km": 0,
                     "amount": 0.0
                 };
-
-
+                
             },
             computed: {
                 "order.travel_duration":  {
@@ -317,9 +304,8 @@
                     }
                 },               
                 editRouteRow: function (id) {
-
-                    route = getItemByValue(this.order.relations, "id", id);                                    
-                    this.route_tmp = route;
+                                                     
+                    this.route_tmp = getItemByValue(this.order.relations, "id", id); ;
                     
                 },
                 selectRouteNone: function () {
@@ -335,8 +321,6 @@
                     $("#select_all").each(function () {
                         this.checked = false;
                     });
-
-                    
                 },
                 selectRouteAll: function (event) {
 
@@ -400,15 +384,24 @@
                     this.sumCosts()
                 },
                 addRoute() {
-
-                    let new_row = clone(this.route_tmp);
-
-                    this.new_row.id = getMax(this.order.relations, "id") + 1;
                     
-                    this.order.relations.push(this.new_row);
+                    this.route_tmp.id = getMax(this.order.relations, "id") + 1;
+                    
+                    this.order.relations.push(this.route_tmp);
 
                     this.sumKm();
 
+                    this.route_tmp = jQuery.extend(true, {},
+                         {
+                             "id": -1,
+                             "town_from": towns[0],
+                             "town_to": towns[0],
+                             "km_at_start": 0.0,
+                             "km_at_finish": 0.0,
+                             "km": 0,
+                             "amount": 0.0
+                        }
+                    );
                 },
                 getTownById: function (town_id) {
 

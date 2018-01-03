@@ -47,6 +47,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "APM.VueClient", "APM.VueCli
 		VWDPort = "57782"
 		SlnRelativePath = "APM.VueClient\"
 		DefaultWebSiteLanguage = "Visual C#"
+		StartServerOnDebug = "true"
 	EndProjectSection
 EndProject
 Global

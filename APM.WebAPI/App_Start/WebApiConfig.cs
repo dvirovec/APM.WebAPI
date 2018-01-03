@@ -24,8 +24,9 @@ namespace APM.WebAPI
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-
-            var cors = new EnableCorsAttribute("http://localhost:14405", "*", "*");
+            
+            var cors = new EnableCorsAttribute("http://localhost:57782", "*", "*");
+            //var cors = new EnableCorsAttribute("http://localhost:14405", "*", "*");
             config.EnableCors(cors);
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
