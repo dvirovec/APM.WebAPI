@@ -30,8 +30,7 @@
 
         <div class="container">
 
-            <div class="btn btn-danger" onclick="getProductList();">Products</div>
-
+            <div class="btn btn-danger" onclick="setVehicles();">Products</div>
             
             <form class="form-inline">
 
@@ -241,13 +240,25 @@
                 selected_cost_type_id: 0,
                 cost_unit_price: 0.0,
                 cost_qty: 1.0,
-
+                isLoaded: false,
                 selected_route: []
+            },
+            beforeCreate() {
+                axios.get(server_path + '/api/vehicle')
+                    .then(function (response) {
+                        vehicles = response.data;
+                        console.log(response.data);
+                        isLoaded = true;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });    
             },
             beforeMount: function () {
                 
                 this.order = init_order;
 
+               
                 this.route_tmp = {
                     "id": -1,
                     "town_from": towns[0],

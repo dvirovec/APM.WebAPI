@@ -68,7 +68,9 @@ Vue.component('vehicle-select', {
         }
     },
     beforeMount: function () {
+
         this.vehicle_list = vehicles;
+         
     }
 });
 

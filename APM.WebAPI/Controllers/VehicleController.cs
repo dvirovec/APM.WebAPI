@@ -11,8 +11,7 @@ using System.Web.Http.OData;
 
 namespace APM.WebAPI.Controllers
 {
-    
-    public class Controller : ApiController
+    public class VehicleController : ApiController
     {
         // GET: api/Vehicles
         [EnableQuery()]
@@ -33,7 +32,7 @@ namespace APM.WebAPI.Controllers
 
         // GET: api/Vehicle/5
         [ResponseType(typeof(Vehicle))]
-     //   [Authorize()]
+        //   [Authorize()]
         public IHttpActionResult Get(int id)
         {
             try
