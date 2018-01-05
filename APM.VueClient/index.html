@@ -231,24 +231,25 @@
         }
 
         $(document).ready(function () {
-
-            var loadOk = true;
-
+            
             loadVehicles().then(() => {
+
                 loadTowns().then(() => {
+
                     initTravel();
-                }).catch((error) => {
-                    document.getElementById('error').style.visibility = 'visible';
-                });
-            }).catch((error) => {
-                
-                document.getElementById('error').style.visibility = 'visible';
-                });            
+
+                }).catch((error) => { displayError(); });
+
+            }).catch((error) => { displayError(); });            
     
 
         }); 
         
-     
+
+        function displayError() {
+            document.getElementById('error').style.visibility = 'visible';              
+        } 
+
 
         async function loadTowns() {
             
