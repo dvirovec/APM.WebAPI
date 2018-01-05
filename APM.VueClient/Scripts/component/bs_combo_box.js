@@ -1,4 +1,57 @@
-﻿Vue.component('town-select', {
+﻿var ComboBox = {
+    data: {
+        options:null,
+    },
+    template: '<div class="form-inline col-sx-6">' +
+    '<label style="margin-right:.5em;margin-left:.5em;" for="data-select">{{ label }}</label>' +
+    '<select name="data-select" v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
+    '<option v-for="item in options" v-bind:value="item.id">{{item.name}}</option>' +
+    '</select></div>',
+
+}
+
+
+Vue.component('combo-box', {
+    props: {              
+        options: {
+            required: true
+        },
+        value: {
+            required: true
+        },
+        label: {
+            type: String,
+            required: true
+        },
+        required: {
+            type: Boolean
+        },
+        readonly: {
+            type: Boolean
+        }
+    },
+
+    template: '<div class="form-inline col-sx-6">' +
+    '<label style="margin-right:.5em;margin-left:.5em;" for="data-select">{{ label }}</label>' +
+    '<select name="data-select" v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
+    '<option v-for="item in data" v-bind:value="item.id">{{item.name}}</option>' +
+    '</select></div>',
+    data: {
+        value: null
+    },
+    beforeMount: function () { 
+        console.log(this.data);
+    },
+    methods: {
+        updateValue(value) {
+            this.$emit('input', value);
+            this.value = getItemByValue(data, "id", value);
+        }
+    },
+    
+});
+
+Vue.component('town-select', {
     props: {
         value: {
             required: true
