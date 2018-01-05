@@ -1,20 +1,16 @@
-﻿const server_path = 'http://localhost:14340';
+﻿const SERVER_PATH = 'http://localhost:14340/';
+const VEHICLE_SERVICE = SERVER_PATH + "api/vehicle";
+const TOWN_SERVICE = SERVER_PATH + "api/town";
 
 var currecy_list = [{ "id": 'HRK', ex_rate: 1 }, { "id": 'EUR', ex_rate: 7.54334 }];
 
 var vehicles = [];
 
-function setVehicles () {
-   vehicles = [{ 'id': 1, 'name': "Passat ZG-8184-DS", "private": true },
-                { 'id': 2, 'name': "Audi ZG-2184-ED", "private": false }];
-}
 
 var countries = [{ "id": 1, "name": "Hrvatska", "day_amount": 140, "currency":"HRK" },
     { "id": 2, "name": "Austria", "day_amount": 70, "currency": "EUR" }];
 
-var towns = [{ "id": 1, "name": "Zagreb", "country": { "id": 1, "name": "Hrvatska" } },
-{ "id": 2, "name": "Deutschlandsberg", "country": { "id": 2, "name": "Austria" } },
-{ "id": 3, "name": "Đurđevac", "country": { "id": 1, "name": "Hrvatska" } }];
+var towns = [];
 
 var company = {
     "name": 'INFORBIS', "address": 'Trnjanska cesta 11a',

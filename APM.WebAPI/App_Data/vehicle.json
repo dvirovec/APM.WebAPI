@@ -1,12 +1,12 @@
 [
   {
-    "id": 1,
-    "name": "Passat ZG-8184-DS",
-    "personal": true
+    "Id": 1,
+    "Name": "Passat ZG-8184-DS",
+    "Personal": true
   },
   {
-    "id": 2,
-    "name": "Audi ZG-2184-ED",
-    "personal": false
+    "Id": 2,
+    "Name": "Audi ZG-2184-ED",
+    "Personal": false
   }
 ]

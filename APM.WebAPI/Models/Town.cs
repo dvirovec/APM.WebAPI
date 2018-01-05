@@ -5,11 +5,10 @@ using System.Web;
 
 namespace APM.WebAPI.Models
 {
-    public class Vehicle
+    public class Town
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public bool Personal { get; set; }
-
+        public string Name { get; set; }        
+        public Country Country { get; set; }
     }
 }

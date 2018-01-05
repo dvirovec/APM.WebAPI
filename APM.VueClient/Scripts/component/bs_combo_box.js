@@ -1,56 +1,4 @@
-﻿var ComboBox = {
-    data: {
-        options:null,
-    },
-    template: '<div class="form-inline col-sx-6">' +
-    '<label style="margin-right:.5em;margin-left:.5em;" for="data-select">{{ label }}</label>' +
-    '<select name="data-select" v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
-    '<option v-for="item in options" v-bind:value="item.id">{{item.name}}</option>' +
-    '</select></div>',
-
-}
-
-
-Vue.component('combo-box', {
-    props: {              
-        options: {
-            required: true
-        },
-        value: {
-            required: true
-        },
-        label: {
-            type: String,
-            required: true
-        },
-        required: {
-            type: Boolean
-        },
-        readonly: {
-            type: Boolean
-        }
-    },
-
-    template: '<div class="form-inline col-sx-6">' +
-    '<label style="margin-right:.5em;margin-left:.5em;" for="data-select">{{ label }}</label>' +
-    '<select name="data-select" v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
-    '<option v-for="item in data" v-bind:value="item.id">{{item.name}}</option>' +
-    '</select></div>',
-    data: {
-        value: null
-    },
-    beforeMount: function () { 
-        console.log(this.data);
-    },
-    methods: {
-        updateValue(value) {
-            this.$emit('input', value);
-            this.value = getItemByValue(data, "id", value);
-        }
-    },
-    
-});
-
+﻿
 Vue.component('town-select', {
     props: {
         value: {
@@ -70,21 +18,24 @@ Vue.component('town-select', {
 
     template: '<div class="form-inline col-sx-6">' +
     '<label style="margin-right:.5em;margin-left:.5em;" for="town-select">{{ label }}</label>' +
-    '<select v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
+    '<select v-on:click="setData()"  v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
     '<option v-for="town in town_list" v-bind:value="town.id">{{town.name}}</option>' +
     '</select></div>',
     data: {
-        town_list: null,
+        town_list: [],
         value: null
     },
     methods: {
+        setData: function () {
+            this.town_list = towns;
+        },
         updateValue(value) {
             this.$emit('input', value);
             this.value = getItemByValue(towns, "id", value);
         }
     },
     beforeMount: function () {
-        this.town_list = towns;
+        this.town_list = towns;        
     }
 });
 
@@ -105,26 +56,42 @@ Vue.component('vehicle-select', {
         }
     },
 
-    template: '<div class="form-inline col-sx-6">' +
+    template: '<div class="form-inline col-sx-6" >' +
     '<label style="margin-right:.5em;margin-left:.5em;" for="vehicle-select">{{ label }}</label>' +
-    '<select v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
-    '<option v-for="vehicle in vehicles" v-bind:value="vehicle.id">{{vehicle.name}}</option>' +
+    '<select v-on:click="setData()" v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
+    '<option v-for="vehicle in vehicle_list" v-bind:value="vehicle.id">{{vehicle.name}}</option>' +
     '</select></div>',
     data: {
-        vehicle_list: null,
-        value: null
+        vehicle_list: [],
+        value: null,
+        isLoaded: false
+    },
+    created: function () {
+        this.fetchData();
+    },
+    watch: function() {     
+       
     },
     methods: {
+        setData: function () {
+            this.vehicle_list = vehicles;
+        },
         updateValue(value) {
             this.$emit('input', value);
-            this.value = getItemByValue(towns, "id", value);
+            this.value = getItemByValue(vehicles, "id", value);
+        },
+        fetchData: function () {
+           
         }
     },
+    beforeCreate: function () {        
+    },
+    mounted: function () {                
+    },
     beforeMount: function () {
-
-        this.vehicle_list = vehicles;
-         
+        this.vehicle_list = vehicles;                 
     }
+    
 });
 
 

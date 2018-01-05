@@ -1,27 +1,23 @@
 ﻿using APM.WebAPI.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using System.Web.Http.OData;
 
 namespace APM.WebAPI.Controllers
 {
-    public class VehicleController : ApiController
+    public class TownController : ApiController
     {
-        // GET: api/Vehicles
+        // GET: api/Towns
         [EnableQuery()]
-        [ResponseType(typeof(Vehicle))]
+        [ResponseType(typeof(Town))]
         public IHttpActionResult Get()
         {
             try
             {
-                var vehicleRepository = new VehicleRepository();
-                return Ok(vehicleRepository.Retrieve().AsQueryable());
+                var dataRepository = new TownRepository();
+                return Ok(dataRepository.Retrieve().AsQueryable());
             }
             catch (Exception ex)
             {
@@ -29,21 +25,21 @@ namespace APM.WebAPI.Controllers
             }
         }
 
-        // GET: api/Vehicle/5
-        [ResponseType(typeof(Vehicle))]
+        // GET: api/Town/5
+        [ResponseType(typeof(Town))]
         //   [Authorize()]
         public IHttpActionResult Get(int id)
         {
             try
             {
-                Vehicle vehicle = null;
-                var vehicleRepository = new VehicleRepository();
+                Town town = null;
+                var dataRepository = new TownRepository();
 
                 if (id > 0)
                 {
-                    var vehicles = vehicleRepository.Retrieve();
-                    vehicle = vehicles.FirstOrDefault(p => p.Id == id);
-                    if (vehicle == null)
+                    var towns = dataRepository.Retrieve();
+                    town = towns.FirstOrDefault(p => p.Id == id);
+                    if (town == null)
                     {
                         return NotFound();
                     }
@@ -52,7 +48,7 @@ namespace APM.WebAPI.Controllers
                 {
                     //product = productRepository.Create();
                 }
-                return Ok(vehicle);
+                return Ok(town);
             }
             catch (Exception ex)
             {
@@ -60,14 +56,14 @@ namespace APM.WebAPI.Controllers
             }
         }
 
-        
-        // POST: api/Products
+
+        // POST: api/Towns
         [ResponseType(typeof(Product))]
-        public IHttpActionResult Post([FromBody]Product product)
+        public IHttpActionResult Post([FromBody]Town data)
         {
             try
             {
-                if (product == null)
+                if (data == null)
                 {
                     return BadRequest("Product cannot be null");
                 }
@@ -77,14 +73,13 @@ namespace APM.WebAPI.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var productRepository = new Models.ProductRepository();
-                var newProduct = productRepository.Save(product);
-                if (newProduct == null)
+                var dataRepository = new Models.TownRepository();
+                var newData = dataRepository.Save(data);
+                if (newData == null)
                 {
                     return Conflict();
                 }
-                return Created<Product>(Request.RequestUri + newProduct.ProductId.ToString(),
-                    newProduct);
+                return Created<Town>(Request.RequestUri + newData.Id.ToString(), newData);
             }
             catch (Exception ex)
             {
@@ -92,12 +87,12 @@ namespace APM.WebAPI.Controllers
             }
         }
 
-        // PUT: api/Products/5
-        public IHttpActionResult Put(int id, [FromBody]Product product)
+        // PUT: api/Towns/5
+        public IHttpActionResult Put(int id, [FromBody]Town town)
         {
             try
             {
-                if (product == null)
+                if (town == null)
                 {
                     return BadRequest("Product cannot be null");
                 }
@@ -106,9 +101,9 @@ namespace APM.WebAPI.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var productRepository = new Models.ProductRepository();
-                var updatedProduct = productRepository.Save(id, product);
-                if (updatedProduct == null)
+                var dataRepository = new Models.TownRepository();
+                var data = dataRepository.Save(id, town);
+                if (data == null)
                 {
                     return NotFound();
                 }
@@ -120,7 +115,7 @@ namespace APM.WebAPI.Controllers
             }
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Towns/5
         public void Delete(int id)
         {
         }
