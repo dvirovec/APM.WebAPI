@@ -230,29 +230,21 @@
             return max;
         }
 
-        $(document).ready(function () {
-            
+        $(document).ready( ()=> {            
+
             loadVehicles().then(() => {
-
                 loadTowns().then(() => {
-
                     initTravel();
-
-                }).catch((error) => { displayError(); });
-
-            }).catch((error) => { displayError(); });            
-    
+                }).catch((error) => {displayError();});
+            }).catch((error) => {displayError();});                
 
         }); 
         
-
         function displayError() {
             document.getElementById('error').style.visibility = 'visible';              
         } 
 
-
-        async function loadTowns() {
-            
+        async function loadTowns() {            
                 await axios.get(TOWN_SERVICE)
                     .then(function (response) {
                         towns = response.data;
@@ -261,17 +253,14 @@
                     });                                       
         }
 
-        async function loadVehicles() {
-            
+        async function loadVehicles() {            
                 await axios.get(VEHICLE_SERVICE)
                     .then(function (response) {
                         vehicles = response.data;
                     }).catch(function (error) {
                         throw Error(error);
                 });
-
         }
-
 
         function initTravel() {
 
@@ -312,7 +301,6 @@
                         "km": 0,
                         "amount": 0.0
                     };
-
                 },
                 components: {
 
@@ -334,7 +322,6 @@
                     },
                     "order.travel_finish": function () {
                         this.order.travel_duration = this.calcDuration();
-
                     }
                 },
                 mounted: function () {
