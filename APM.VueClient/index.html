@@ -83,20 +83,36 @@
 
                     <!-- Relations panel-->
                     <div class="tab-pane active" id="relation_tab">
+                   
+                        <div class="form" style="margin-top:1em;">
 
-                        <!-- <div class="form-group"><combo-box v-model="route_tmp.town_from.id" data=towns /></div>-->
+                            <div class="form-group col-sx-6">
+                                <select name="select" v-model="route_tmp.town_from" class="form-control">
+                                    <option v-for="d in towns" v-bind:value="d">{{d.name}}</option>' +
+                                </select>
+                            </div>
 
-                        <div class="form" style="margin-top:1em;margin-left:-1em;">
+                            <div class="form-group col-sx-6">
+                                <select name="select" v-model="route_tmp.town_to" class="form-control">
+                                    <option v-for="d in towns" v-bind:value="d">{{d.name}}</option>' +
+                                </select>
+                            </div>
 
-                            <div class="form-group"><town-select v-model="route_tmp.town_from.id" /></div>
-                            <div class="form-group"><input type="number" class="form-control text-ceneter" style="width:7em;" 
-                                                           v-model:number="route_tmp.km_at_start" /></div>
+                            <div class="form-group">
+                                <input type="number" class="form-control text-ceneter" style="width:7em;"
+                                       v-model:number="route_tmp.km_at_start" />
+                            </div>
+
                             <div class="form-group"><town-select label="-" v-model="route_tmp.town_to.id" /></div>
-                            <div class="form-group"><input type="number" class="form-control text-ceneter" style="width:7em;" 
-                                                           v-model:number="route_tmp.km_at_finish" /></div>
-                            <div class="form-group"><input type="number" class="form-control text-right" style="width:7em;" 
-                                                           v-model:number="route_tmp.km" /></div>
-                            
+                            <div class="form-group">
+                                <input type="number" class="form-control text-ceneter" style="width:7em;"
+                                       v-model:number="route_tmp.km_at_finish" />
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control text-right" style="width:7em;"
+                                       v-model:number="route_tmp.km" />
+                            </div>
+
                             <div class="btn btn-primary" @click="addRoute"><span class="glyphicon glyphicon-plus"></span></div>
                             <div v-if="selected_route.length > 0" class="btn btn-primary" @click="removeSelectedRoute"><span class="glyphicon glyphicon-trash"></span></div>
 
@@ -141,9 +157,13 @@
 
                     <!-- Cost panel-->
                     <div class="tab-pane" id="cost_tab">
-                        <div class="form" style="margin-top:1em;margin-left:-1em;">
+                        <div class="form" style="margin-top:1em;">
+                            <div class="form-group col-sx-6">
+                                <select name="select" v-model="cost_tmp.cost_type" class="form-control">
+                                    <option v-for="d in cost_type_list" v-bind:value="d">{{d.name}}</option>' +
+                                </select>
+                            </div>
 
-                            <div class="form-group"><cost-type-select v-model="cost_tmp.cost_type.id" /></div>
                             <div class="form-group"><input class="form-control" type="text" v-model="cost_tmp.cost_description" /></div>
                             <div class="form-group"><input class="form-control text-right" type="number" v-model="cost_tmp.cost_qty" /></div>
                             <div class="form-group"><input class="form-control text-right" type="number" v-model="cost_tmp.cost_unit_price" /></div>
@@ -188,45 +208,6 @@
 
     <script type="text/javascript">
 
-        function getItemByValue(array, propName, value) {
-
-            var theItem = null;
-
-            for (var i = 0; i < array.length; i++) {
-                var item = array[i];
-                if (item[propName] == value) {
-                    theItem = item;
-                    break;
-                }
-            }
-            return theItem;
-        }
-
-        function getItemMax(array, propName) {
-            var max = 0;
-            var maxItem = null;
-            for (var i = 0; i < array.length; i++) {
-                var item = array[i];
-                if (item[propName] > max) {
-                    max = item[propName];
-                    maxItem = item;
-                }
-            }
-            return maxItem;
-        }
-
-        function getItemIndex(array, propName, value) {
-            let r = null;
-            for (var i = 0; i < array.length; i++) {
-                var item = array[i];
-                if (item[propName] == value) {
-                    r = i;
-                    break;
-                }
-            }
-            return r;
-        }
-
         function getMax(array, propName) {
             var max = 0;
             var maxItem = null;
@@ -238,6 +219,20 @@
                 }
             }
             return max;
+        }         
+
+        function getItemByValue(array, propName, value) {
+
+            var theItem = null;
+
+            for (var i = 0; i < array.length; i++) {
+                var item = array[i];
+                if (item[propName] === value) {
+                    theItem = item;
+                    break;
+                }
+            }
+            return theItem;
         }
 
         $(document).ready( ()=> {            

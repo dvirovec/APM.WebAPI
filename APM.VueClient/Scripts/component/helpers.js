@@ -24,6 +24,46 @@ function getDate() {
 }
 
 
+
+function getItemMax(array, propName) {
+    var max = 0;
+    var maxItem = null;
+    for (var i = 0; i < array.length; i++) {
+        var item = array[i];
+        if (item[propName] > max) {
+            max = item[propName];
+            maxItem = item;
+        }
+    }
+    return maxItem;
+}
+
+function getItemIndex(array, propName, value) {
+    let r = null;
+    for (var i = 0; i < array.length; i++) {
+        var item = array[i];
+        if (item[propName] == value) {
+            r = i;
+            break;
+        }
+    }
+    return r;
+}
+
+function getMax(array, propName) {
+    var max = 0;
+    var maxItem = null;
+    for (var i = 0; i < array.length; i++) {
+        var item = array[i];
+        if (item[propName] > max) {
+            max = item[propName];
+            maxItem = item;
+        }
+    }
+    return max;
+}
+
+
 function getCurrentDate() {
 
     var now = new Date($.now())
