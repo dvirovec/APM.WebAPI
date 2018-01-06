@@ -80,6 +80,8 @@
                     <li><a data-toggle="tab" href="#">Obračun</a></li>
                 </ul>
                 <div class="tab-content">
+
+                    <!-- Relations panel-->
                     <div class="tab-pane active" id="relation_tab">
 
                         <!-- <div class="form-group"><combo-box v-model="route_tmp.town_from.id" data=towns /></div>-->
@@ -87,10 +89,14 @@
                         <div class="form" style="margin-top:1em;margin-left:-1em;">
 
                             <div class="form-group"><town-select v-model="route_tmp.town_from.id" /></div>
-                            <div class="form-group"><input type="number" class="form-control text-ceneter" style="width:7em;" v-model:number="route_tmp.km_at_start" /></div>
+                            <div class="form-group"><input type="number" class="form-control text-ceneter" style="width:7em;" 
+                                                           v-model:number="route_tmp.km_at_start" /></div>
                             <div class="form-group"><town-select label="-" v-model="route_tmp.town_to.id" /></div>
-                            <div class="form-group"><input type="number" class="form-control text-ceneter" style="width:7em;" v-model:number="route_tmp.km_at_finish" /></div>
-                            <div class="form-group"><input type="number" class="form-control text-right" style="width:7em;" v-model:number="route_tmp.km" /></div>
+                            <div class="form-group"><input type="number" class="form-control text-ceneter" style="width:7em;" 
+                                                           v-model:number="route_tmp.km_at_finish" /></div>
+                            <div class="form-group"><input type="number" class="form-control text-right" style="width:7em;" 
+                                                           v-model:number="route_tmp.km" /></div>
+                            
                             <div class="btn btn-primary" @click="addRoute"><span class="glyphicon glyphicon-plus"></span></div>
                             <div v-if="selected_route.length > 0" class="btn btn-primary" @click="removeSelectedRoute"><span class="glyphicon glyphicon-trash"></span></div>
 
@@ -126,39 +132,42 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th class="text-right">{{this.order.total_km}}</th>
-                                    <th class="text-right">{{this.order.total_km_amount}}</th>
+                                    <th class="text-right">{{order.total_km}}</th>
+                                    <th class="text-right">{{order.total_km_amount}}</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
 
+                    <!-- Cost panel-->
                     <div class="tab-pane" id="cost_tab">
+                        <div class="form" style="margin-top:1em;margin-left:-1em;">
 
-                        <div class="form" style="margin-top:1em;">
-                            <div class="form-group"><cost-type-select v-model="selected_cost_type_id" /></div>
-                            <div class="form-group"><input class="form-control" type="text" v-model="cost_description" /></div>
-                            <div class="form-group"><input class="form-control text-right" type="number" v-model="cost_qty" /></div>
-                            <div class="form-group"><input class="form-control text-right" type="number" v-model="cost_unit_price" /></div>
+                            <div class="form-group"><cost-type-select v-model="cost_tmp.cost_type.id" /></div>
+                            <div class="form-group"><input class="form-control" type="text" v-model="cost_tmp.cost_description" /></div>
+                            <div class="form-group"><input class="form-control text-right" type="number" v-model="cost_tmp.cost_qty" /></div>
+                            <div class="form-group"><input class="form-control text-right" type="number" v-model="cost_tmp.cost_unit_price" /></div>
+
                             <div class="btn btn-primary" @click="addCost"><span class="glyphicon glyphicon-plus"></span></div>
                         </div>
 
                         <table id="cost_table" class="table table-striped table-bordered table-hover" style="margin-top:1em;" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th width="5%"></th>
-                                    <th width="60%">Opis</th>
+                                    <th width="20%"></th>
+                                    <th width="30%">Opis</th>
                                     <th width="15%">Količina</th>
                                     <th width="15%">Cijena</th>
                                     <th width="15%">Iznos</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="r in this.order.costs">
-                                    <td class="text-left">{{r.description}}</td>
-                                    <td class="text-right">{{r.qty}}</td>
-                                    <td class="text-right">{{r.unit_price}}</td>
-                                    <td class="text-right">{{r.amount}}</td>
+                                <tr v-for="r in order.costs">
+                                    <td class="text-left">{{r.cost_type.name}}</td>
+                                    <td class="text-left">{{r.cost_description}}</td>
+                                    <td class="text-right">{{r.cost_qty}}</td>
+                                    <td class="text-right">{{r.cost_unit_price}}</td>
+                                    <td class="text-right">{{r.cost_amount}}</td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -166,7 +175,8 @@
                                     <th>Ukupno</th>
                                     <th></th>
                                     <th></th>
-                                    <th class="text-right">{{this.order.total_costs}}</th>
+                                    <th></th>
+                                    <th class="text-right">{{order.total_costs}}</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -264,19 +274,17 @@
 
         function initTravel() {
 
-            var travel = new Vue({
+             travel = new Vue({
                 el: "#travel",
                 data: {
                     order: null,
+                                        
                     route_tmp: null,
+                    cost_tmp: null,            
 
                     visible_tab: 2,
                     total_km: 0.0,
-
-                    cost_description: "",
-                    selected_cost_type_id: 0,
-                    cost_unit_price: 0.0,
-                    cost_qty: 1.0,
+                                        
                     isLoaded: false,
                     selected_route: [],
 
@@ -291,6 +299,15 @@
                     this.order = init_order;
 
                     this.towns = towns;
+
+                    this.cost_tmp = {
+                        "id": -1,
+                        "cost_type": cost_type_list[0],
+                        "cost_description":"",
+                        "cost_unit_price": 0.0,
+                        "cost_qty": 1.0,
+                        "cost_amount":0.0
+                    };
 
                     this.route_tmp = {
                         "id": -1,
@@ -417,16 +434,13 @@
                         this.order.total_km_amount = this.order.total_km_amount * unit_km_amount;
                     },
                     addCost() {
-                        let data = { "description": "", "qty": 1, "unit_price": 0.0, "amount": 0.0 };
 
-                        data.unit_price = this.cost_unit_price;
-                        data.qty = this.cost_qty;
-                        data.description = this.cost_description;
-                        data.amount = Number(data.unit_price) * Number(data.qty);
+                        this.cost_tmp.id = getMax(this.order.costs, "id") + 1;
+                        
+                        this.order.costs.push(this.cost_tmp);
 
-                        this.order.costs.push(data);
+                        this.sumCosts()                       
 
-                        this.sumCosts()
                     },
                     addRoute() {
 
@@ -435,18 +449,7 @@
                         this.order.relations.push(this.route_tmp);
 
                         this.sumKm();
-
-                        this.route_tmp = jQuery.extend(true, {},
-                            {
-                                "id": -1,
-                                "town_from": towns[0],
-                                "town_to": towns[0],
-                                "km_at_start": 0.0,
-                                "km_at_finish": 0.0,
-                                "km": 0,
-                                "amount": 0.0
-                            }
-                        );
+                        
                     },
                     getTownById: function (town_id) {
 

@@ -1,4 +1,41 @@
-﻿
+﻿Vue.component('cost-type-select', {
+    props: {
+        value: {
+            required: true
+        },
+        label: {
+            type: String,
+            required: true
+        },
+        required: {
+            type: Boolean
+        },
+        readonly: {
+            type: Boolean
+        }
+    },
+    template: '<div class="form-inline col-sx-6">' +
+    '<label style="margin-right:.5em;margin-left:.5em;" for="select">{{ label }}</label>' +
+    '<select name="select" v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
+    '<option v-for="d in data_list" v-bind:value="d">{{d.name}}</option>' +
+    '</select></div>',
+    data: {
+        data_list: [],
+        value: null
+    },
+    methods: {        
+        updateValue(value) {
+            this.$emit('input', value);
+            this.value = value; //getItemByValue(cost_type_list, "id", value);
+        }
+    },
+    beforeMount: function () {
+        this.data_list = cost_type_list;
+    }
+});
+
+
+
 Vue.component('town-select', {
     props: {
         value: {
@@ -17,25 +54,22 @@ Vue.component('town-select', {
     },
 
     template: '<div class="form-inline col-sx-6">' +
-    '<label style="margin-right:.5em;margin-left:.5em;" for="town-select">{{ label }}</label>' +
-    '<select v-on:click="setData()"  v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
-    '<option v-for="town in town_list" v-bind:value="town.id">{{town.name}}</option>' +
+    '<label style="margin-right:.5em;margin-left:.5em;" for="select">{{ label }}</label>' +
+    '<select name="select" v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
+    '<option v-for="d in data_list" v-bind:value="d.id">{{d.name}}</option>' +
     '</select></div>',
     data: {
-        town_list: [],
+        data_list: [],
         value: null
     },
-    methods: {
-        setData: function () {
-            this.town_list = towns;
-        },
+    methods: {        
         updateValue(value) {
             this.$emit('input', value);
             this.value = getItemByValue(towns, "id", value);
         }
     },
     beforeMount: function () {
-        this.town_list = towns;        
+        this.data_list = towns;        
     }
 });
 
@@ -57,41 +91,23 @@ Vue.component('vehicle-select', {
     },
 
     template: '<div class="form-inline col-sx-6" >' +
-    '<label style="margin-right:.5em;margin-left:.5em;" for="vehicle-select">{{ label }}</label>' +
-    '<select v-on:click="setData()" v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
-    '<option v-for="vehicle in vehicle_list" v-bind:value="vehicle.id">{{vehicle.name}}</option>' +
+    '<label style="margin-right:.5em;margin-left:.5em;" for="select">{{ label }}</label>' +
+    '<select name="select" v-bind:value="value" class="form-control" @input="updateValue($event.target.value)">' +
+    '<option v-for="d in data_list" v-bind:value="d.id">{{d.name}}</option>' +
     '</select></div>',
     data: {
-        vehicle_list: [],
-        value: null,
-        isLoaded: false
+        data_list: [],
+        value: null,        
     },
-    created: function () {
-        this.fetchData();
-    },
-    watch: function() {     
-       
-    },
-    methods: {
-        setData: function () {
-            this.vehicle_list = vehicles;
-        },
+    methods: {        
         updateValue(value) {
             this.$emit('input', value);
-            this.value = getItemByValue(vehicles, "id", value);
-        },
-        fetchData: function () {
-           
-        }
-    },
-    beforeCreate: function () {        
-    },
-    mounted: function () {                
-    },
+            this.value = value;
+        },        
+    },    
     beforeMount: function () {
-        this.vehicle_list = vehicles;                 
-    }
-    
+        this.data_list = vehicles;                 
+    }    
 });
 
 
