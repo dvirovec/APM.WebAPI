@@ -1,7 +1,7 @@
-﻿const SERVER_PATH = 'http://localhost:14340/';
-const VEHICLE_SERVICE = SERVER_PATH + "api/vehicle";
-const CURRENCY_SERVICE = SERVER_PATH + "api/currency";
-const TOWN_SERVICE = SERVER_PATH + "api/town";
+﻿const SERVER_PATH = 'http://localhost:14340/api/';
+const VEHICLE_SERVICE = SERVER_PATH + "vehicle";
+const CURRENCY_SERVICE = SERVER_PATH + "currency";
+const TOWN_SERVICE = SERVER_PATH + "town";
 
 var travel=null;
 
