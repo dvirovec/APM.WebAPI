@@ -300,7 +300,7 @@
                     this.towns = towns;
                     this.vehicles = vehicles;       
 
-                    this.$initTempRows();
+                    this.initTempRows();
 
                 },
                 components: {
@@ -308,8 +308,7 @@
                 },
                 computed: {
                     "order.travel_duration": {
-                        get: function () {
-                            conosle.log(moment.utc(moment(this.order.travel_finish).diff(this.order.travel_start)));
+                        get: function () {                            
                             return moment.utc(moment(this.order.travel_finish).diff(this.order.travel_start));
                         }
                     }
@@ -333,6 +332,7 @@
                 methods: {
 
                     initTempRows: function() {
+
                         this.cost_tmp = {
                             "id": -1,
                             "cost_type": cost_type_list[0],

@@ -6,9 +6,7 @@ function getDateTime() {
     m.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
 
     mStr = m.format(DATE_TIME_FORMAT).replace('12:', '00:');
-
-    console.log(mStr);
-
+    
     return mStr;
 }
 
@@ -17,8 +15,6 @@ function getDate() {
     m.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
 
     mStr = m.format(DATE_FORMAT);
-
-    console.log(mStr);
 
     return mStr;
 }

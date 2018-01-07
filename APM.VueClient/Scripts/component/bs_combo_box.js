@@ -122,9 +122,7 @@ Vue.component('datetimepicker', {
         update(event) {
 
             this.$emit('input', event.target.value);
-
-            console.log(event.target.value);
-
+           
         }
     },
     mounted() {
