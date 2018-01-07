@@ -1,10 +1,11 @@
 ﻿const SERVER_PATH = 'http://localhost:14340/';
 const VEHICLE_SERVICE = SERVER_PATH + "api/vehicle";
+const CURRENCY_SERVICE = SERVER_PATH + "api/currency";
 const TOWN_SERVICE = SERVER_PATH + "api/town";
 
 var travel=null;
 
-var currecy_list = [{ "id": 'HRK', ex_rate: 1 }, { "id": 'EUR', ex_rate: 7.54334 }];
+var currecy_list = null;
 
 var vehicles = [];
 

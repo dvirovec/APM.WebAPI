@@ -98,13 +98,13 @@ Vue.component('vehicle-select', {
     '</select></div>',
     data: {
         data_list: [],
-        value: null,        
+        value: null        
     },
     methods: {        
         updateValue(value) {
             this.$emit('input', value);
             this.value = value;
-        },        
+        }        
     },    
     beforeMount: function () {
         this.data_list = vehicles;                 

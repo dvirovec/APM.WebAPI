@@ -242,9 +242,11 @@
         $(document).ready( ()=> {            
 
             loadVehicles().then(() => {
-                loadTowns().then(() => {
-                    initTravel();
-                }).catch((error) => {displayError();});
+                loadCurrency().then(() => {
+                    loadTowns().then(() => {
+                        initTravel();
+                    }).catch((error) => { displayError(); });
+                }).catch((error) => { displayError(); });
             }).catch((error) => {displayError();});                
 
         }); 
@@ -261,6 +263,16 @@
                         throw Error(error);
                     });                                       
         }
+
+        async function loadCurrency() {
+            await axios.get(CURRENCY_SERVICE)
+                .then(function (response) {
+                    currecy_list = response.data;
+                }).catch(function (error) {
+                    throw Error(error);
+                });
+        }
+
 
         async function loadVehicles() {            
                 await axios.get(VEHICLE_SERVICE)

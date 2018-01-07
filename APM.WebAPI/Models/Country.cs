@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace APM.WebAPI.Models
+﻿namespace APM.WebAPI.Models
 {
     public class Country
-    {
+    {       
         public int Id { get; set; }
         public string Name { get; set; }       
     }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using APM.WebAPI.DataLayer;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,16 @@ namespace APM.WebAPI.Models
         /// <returns></returns>
         internal List<Vehicle> Retrieve()
         {
+
+            var context = new TravelDataContext();
+
+            var vehicles = context.Vehicles.ToList();
+
+            /* file based 
             var filePath = HostingEnvironment.MapPath(@"~/App_Data/vehicle.json");
             var json = System.IO.File.ReadAllText(filePath);
-            var vehicles = JsonConvert.DeserializeObject<List<Vehicle>>(json);
+            var vehicles = JsonConvert.DeserializeObject<List<Vehicle>>(json);*/
+
             return vehicles;
         }
 
