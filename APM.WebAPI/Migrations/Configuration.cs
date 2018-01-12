@@ -8,6 +8,7 @@ namespace APM.WebAPI.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
             ContextKey = "APM.WebAPI.DataLayer.TravelDataContext";
         }
 
